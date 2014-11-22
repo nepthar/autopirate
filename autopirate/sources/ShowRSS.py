@@ -1,5 +1,8 @@
-from . import BaseSource
-from .. import Episode
+import os.path
+
+from .. import *
+
+import feedparser
 
 class ShowRSS(EpisodeSource):
   name     = "Show RSS"
@@ -18,7 +21,7 @@ class ShowRSS(EpisodeSource):
         showid   = i['showrss_showid'],
         epid     = i['showrss_episode'],
         link     = i['link'],
-        root     = self.path
+        root     = os.path.join(self.path, i['showrss_showname'])
       )]
     except Exception as e:
       say("Unable to parse item: {}".format(str(e)))
@@ -29,4 +32,5 @@ class ShowRSS(EpisodeSource):
     if f.bozo != 0:
       self.say('Invalid Feed or issue with parsing.')
       return []
-    return flatMap(self.toEpisode, f['items'])
+    self.say('Found {} episodes'.format(len(f['items'])))
+    return flatmap(self.toEpisode, f['items'])

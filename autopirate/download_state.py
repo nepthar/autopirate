@@ -1,4 +1,4 @@
-__all__ = ('DownloadInfo',)
+__all__ = ('DownloadState',)
 
 import pickle
 import time
@@ -22,9 +22,10 @@ class DownloadState:
 
   default_prune_age = timedelta(weeks=24)
 
-  def __init__(self, state_file):
+  def __init__(self, state_file, read_only=False):
     self.state_file = norm_path(state_file)
-    self.state = set()
+    self.state      = set()
+    self.read_only  = read_only
 
   def __enter__(self):
     if not self.load():
@@ -32,7 +33,8 @@ class DownloadState:
     return self
 
   def __exit__(self, type, value, traceback):
-    self.save()
+    if not self.read_only:
+      self.save()
 
   def prune(self, older_than=default_prune_age):
     cutoff = int(time.time() - older_than.total_seconds())

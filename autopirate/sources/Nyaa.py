@@ -1,5 +1,8 @@
 from collections import deque
-from .. import Episode
+import urllib
+import feedparser
+
+from .. import *
 
 class NyaaSource(EpisodeSource):
   """
@@ -16,11 +19,13 @@ class NyaaSource(EpisodeSource):
     self.url   = self.base_url.format(urllib.parse.urlencode({'term': self.query}))
 
   def fetchEpisodes(self):
+    self.say('Looking for episodes: {}'.format(self.url))
     f = feedparser.parse(self.url)
     if f.bozo != 0:
       self.say("Invalid feed or issue with parsing")
       return []
-    return flatMap(self.toEpisode, f['entries'])
+    self.say('Found {} episodes'.format(len(f['entries'])))
+    return flatmap(self.toEpisode, f['entries'])
 
   def toEpisode(self, i):
     raise NotImplementedError

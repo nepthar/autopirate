@@ -1,3 +1,6 @@
 from .. import EpisodeSource
 
-__all__ = ("ShowRSS", "HorribleSubs")
+from .Nyaa import HorribleSubsSource
+from .ShowRSS import ShowRSS
+
+__all__ = ("ShowRSS", "HorribleSubsSource")
