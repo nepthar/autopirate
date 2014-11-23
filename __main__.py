@@ -1,10 +1,8 @@
 import argparse
-import sys
 import transmissionrpc
 import os.path
 import configparser
 
-print("main")
 from autopirate import *
 
 DEFAULT_CONF='~/.autopirate/conf.ini'
