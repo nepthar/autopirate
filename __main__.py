@@ -77,7 +77,7 @@ try:
         if not ep in dl:
           if not args.dry_run:
             os.makedirs(ep.root, exist_ok=True)
-            # tc.add_torrent(ep.link, download_dir=ep.root)
+            tc.add_torrent(ep.link, download_dir=ep.root)
             dl.add(ep)
           say('Downloading {} --> {}'.format(ep, ep.root))
         else:
@@ -88,31 +88,3 @@ try:
 except transmissionrpc.error.TransmissionError as e:
   say('Transmission error: {}'.format(e))
   exit(1)
-
-
-
-
-
-
-#except Exception
-
-  # dl_state = DownloadState(conf.get('ap', 'state_file'))
-  # dl_root  = conf.get('ap', 'dl')
-
-# say('Checking for new episodes')
-# for e in flatMap(lambda s: s.fetchEpisodes(), sources):
-#   try:
-#     if not dl_state.has(e):
-#       say('Fetching {}'.format(e))
-#       dl_dir = e.path(dl_root)
-#       os.makedirs(dl_dir, exist_ok=True)
-#       #tc.add_torrent(e.link, download_dir=dl_dir)
-#       dl_state.add(e)
-#   except transmissionrpc.error.TransmissionError as te:
-#     say('Transmission: {}'.format(te.message))
-
-# dl_state.save()
-
-# except transmissionrpc.error.TransmissionError as e:
-#   say('Transmission Client issue: {}. Skipping check'.format(e))
-#   sys.exit(1)
