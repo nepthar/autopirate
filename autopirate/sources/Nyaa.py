@@ -1,8 +1,10 @@
 from collections import deque
 import urllib
 import feedparser
+import os.path
 
 from .. import *
+
 
 class NyaaSource(EpisodeSource):
   """
@@ -75,7 +77,7 @@ class HorribleSubsSource(NyaaSource):
           showid   = showname,
           epid     = epnum,
           link     = i['link'],
-          root     = self.path
+          root     = os.path.join(self.path, showname)
         )]
     except Exception as e:
       self.say(str(e))
